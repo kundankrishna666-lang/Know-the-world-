@@ -1,0 +1,51 @@
+/* fixes.css — मोबाइल/डेस्कटॉप ऑटो-एडजस्ट और लेआउट सुधार (पुराना CSS वैसा ही रहता है) */
+html, body { max-width: 100%; overflow-x: hidden; }
+
+/* सर्च बार मोबाइल पर बाहर निकल रहा था */
+.nav-container > * { min-width: 0; }
+.search-wrapper { min-width: 0; width: 100%; max-width: 550px; }
+.search-wrapper input { min-width: 0; width: 100%; }
+.search-wrapper button { white-space: nowrap; flex-shrink: 0; padding: 10px 18px; }
+
+/* ग्रिड में चार्ट/टेबल चौड़ाई नहीं फैलाएँगे */
+.dashboard-grid > *, .search-content > *, .card { min-width: 0; }
+.kpi-grid { grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); }
+canvas { max-width: 100%; }
+.table-wrapper { overflow: auto; -webkit-overflow-scrolling: touch; }
+table { min-width: 640px; }
+.country-grid { grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr)); }
+.gov-links > * { max-width: 100%; }
+footer { overflow-wrap: anywhere; }
+
+/* खोज परिणाम के सुझाव चिप्स */
+.fx-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1rem; }
+.fx-chips button { background: #fff7ed; color: #c2410c; border: 1px solid #fed7aa; border-radius: 20px; padding: 5px 12px; font-size: .8rem; cursor: pointer; }
+.fx-empty { padding: 2rem 1rem; text-align: center; color: #64748b; grid-column: 1 / -1; }
+.fx-trend { margin-top: 1rem; }
+
+/* टैबलेट */
+@media (max-width: 900px) {
+  .search-wrapper { max-width: 100%; order: 3; flex-basis: 100%; }
+  .modal-content { max-height: 92vh; overflow-y: auto; }
+}
+
+/* मोबाइल */
+@media (max-width: 600px) {
+  header { padding: .8rem 4%; position: static; }
+  .logo { font-size: 1.2rem; }
+  .tabs { gap: .5rem; margin: 1rem auto; }
+  .tab-btn { flex: 1 1 100%; padding: 10px 14px; font-size: .9rem; }
+  .container { padding: 0 4% 3rem; }
+  .card { padding: 1rem; }
+  .kpi-card { padding: 1rem; }
+  .kpi-value { font-size: 1.5rem; }
+  .card h2 { font-size: 1.05rem; flex-wrap: wrap; gap: 4px; }
+  #searchResultSection { padding: 1.1rem; }
+  .modal-content { padding: 1.2rem; }
+  .fx-fab { right: 10px; bottom: 10px; }
+  .fx-fab button { width: 46px; height: 46px; font-size: 1.2rem; }
+  .table-controls > * { flex: 1 1 100%; }
+}
+
+/* बड़ी स्क्रीन */
+@media (min-width: 1400px) { html { font-size: 17px; } }
