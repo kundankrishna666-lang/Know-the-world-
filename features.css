@@ -1,0 +1,44 @@
+/* features.css — नया CSS (पुराने CSS को बिना छेड़े ऊपर से जुड़ता है) */
+.fx-fab{position:fixed;right:16px;bottom:16px;display:flex;flex-direction:column;gap:10px;z-index:1500}
+.fx-fab button{width:52px;height:52px;border-radius:50%;border:none;background:#2563eb;color:#fff;font-size:1.4rem;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.3)}
+.fx-fab button:hover{background:#f97316}
+
+.fx-panel{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:3000;justify-content:center;align-items:center;padding:1rem}
+.fx-panel.open{display:flex}
+.fx-box{background:#fff;color:#334155;width:100%;max-width:560px;max-height:88vh;overflow:auto;border-radius:12px;padding:1.5rem;position:relative}
+.fx-box h2{color:#0f172a;margin-bottom:1rem}
+.fx-box h3{margin:1.2rem 0 .5rem;font-size:1rem;color:#2563eb}
+.fx-x{position:absolute;top:10px;right:16px;font-size:1.6rem;cursor:pointer;color:#64748b;background:none;border:none}
+.fx-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #e2e8f0;flex-wrap:wrap}
+.fx-btn{padding:8px 14px;border:none;border-radius:6px;background:#2563eb;color:#fff;font-weight:600;cursor:pointer}
+.fx-btn.alt{background:#16a34a}
+.fx-btn.red{background:#dc2626}
+.fx-btn.ghost{background:#eff6ff;color:#2563eb;border:1px solid #bfdbfe}
+.fx-box input[type=text],.fx-box input[type=password]{width:100%;padding:9px 12px;border:1px solid #e2e8f0;border-radius:6px;margin:4px 0}
+.fx-item{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 10px;border:1px solid #e2e8f0;border-radius:8px;margin:6px 0}
+.fx-item a,.fx-item span.lnk{cursor:pointer;color:#2563eb;font-weight:500}
+.fx-muted{font-size:.8rem;color:#94a3b8}
+
+/* खोज सुझाव */
+.search-wrapper{position:relative}
+#fxSuggest{position:absolute;top:110%;left:0;right:0;background:#fff;border-radius:10px;box-shadow:0 10px 25px rgba(0,0,0,.25);overflow:hidden;display:none;z-index:1200}
+#fxSuggest div{padding:10px 16px;cursor:pointer;color:#0f172a;font-size:.9rem;display:flex;justify-content:space-between}
+#fxSuggest div:hover,#fxSuggest div.sel{background:#fff7ed}
+#fxSuggest small{color:#94a3b8}
+
+/* बायोमेट्रिक लॉक */
+#fxLock{display:none;position:fixed;inset:0;background:#0f172a;color:#fff;z-index:9999;flex-direction:column;justify-content:center;align-items:center;gap:1rem;text-align:center}
+#fxLock.on{display:flex}
+
+/* डार्क थीम */
+body.fx-dark{--light:#0b1220;--text:#cbd5e1;--border:#334155;background:#0b1220;color:#cbd5e1}
+body.fx-dark .card,body.fx-dark .kpi-card,body.fx-dark .country-card,body.fx-dark #searchResultSection,body.fx-dark .modal-content{background:#1e293b;color:#cbd5e1}
+body.fx-dark .kpi-value,body.fx-dark .card h2{color:#f1f5f9}
+body.fx-dark td{border-color:#334155}
+body.fx-dark tr:hover{background:#334155}
+body.fx-dark .tab-btn:not(.active){background:#1e293b}
+body.fx-dark .fx-box{background:#1e293b;color:#cbd5e1}
+body.fx-dark .fx-box h2{color:#f1f5f9}
+body.fx-dark .fx-box input{background:#0f172a;color:#fff;border-color:#334155}
+
+.fx-save{margin-left:6px}
