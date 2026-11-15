@@ -60,6 +60,7 @@
 
   /* ---------- सेटिंग्स ---------- */
   function renderSettings() {
+    if (window.FX_renderSettings) return window.FX_renderSettings(); // settings-pro.js
     const bioOn = !!LS.get('fx_bio', null);
     $('#fxSetBody').innerHTML = `
       <h2>⚙️ सेटिंग्स</h2>
@@ -238,6 +239,7 @@
       else { window.quickSearch(it.label); }
     };
     input.addEventListener('input', () => {
+      if (data.settings.suggest === false) { hide(); return; }
       items = suggestions(input.value);
       const hist = !input.value ? data.history.slice(0, 6).map(h => ({ label: h, type: '🕘' })) : [];
       items = items.length ? items : hist;
@@ -259,7 +261,7 @@
     const orig = window.searchBharat;
     window.searchBharat = function () {
       const q = input.value.trim();
-      if (q) { data.history = [q, ...data.history.filter(x => x !== q)].slice(0, 30); save(); }
+      if (q && data.settings.saveHistory !== false) { data.history = [q, ...data.history.filter(x => x !== q)].slice(0, 30); save(); }
       hide();
       return orig.apply(this, arguments);
     };
@@ -296,6 +298,9 @@
     // पुराने कोड के const/let को window पर उपलब्ध कराना (सिर्फ़ पढ़ने के लिए)
     try { window.indiaStatesData = indiaStatesData; } catch (e) {}
     try { Object.defineProperty(window, 'allCountries', { get: () => allCountries, configurable: true }); } catch (e) {}
+    window.FX = { data: () => data, save, applySettings, download, downloadCsv, importJson, bioRegister, renderAccount, LS,
+      bioRemove: () => localStorage.removeItem('fx_bio'), session: () => session,
+      reset: () => { data = emptyData(); save(); applySettings(); } };
     build(); applySettings(); setupSearch(); setupObservers(); lockIfNeeded(); pullRemote().then(applySettings);
   }
   window.addEventListener('load', () => setTimeout(init, 0));
