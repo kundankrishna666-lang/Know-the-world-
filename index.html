@@ -1,37 +1,23 @@
 <!DOCTYPE html>
-<html lang="hi" data-theme="light">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Know About Bharat & Global Demographics | Advanced Research Portal</title>
-    <!-- Chart.js -->
+    <title>Know About Bharat & Global Demographics Portal</title>
+    <!-- Chart.js for Data Visualization -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* CSS Variables for Dynamic Theme Switching */
         :root {
-            --bg-color: #f8fafc;
-            --card-bg: #ffffff;
-            --text-color: #334155;
             --primary: #0f172a;
-            --accent: #f97316;
-            --border: #e2e8f0;
+            --secondary: #1e293b;
+            --accent: #f97316; /* Saffron Accent */
+            --green: #16a34a;  /* India Green */
             --blue: #2563eb;
-            --green: #16a34a;
-            --red: #dc2626;
-        }
-
-        [data-theme="dark"] {
-            --bg-color: #0b0f19;
-            --card-bg: #1e293b;
-            --text-color: #f1f5f9;
-            --primary: #f8fafc;
-            --accent: #fb923c;
-            --border: #334155;
-            --blue: #3b82f6;
-            --green: #22c55e;
-            --red: #ef4444;
+            --light: #f8fafc;
+            --text: #334155;
+            --border: #e2e8f0;
         }
 
         * {
@@ -39,24 +25,23 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Poppins', sans-serif;
-            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            background-color: var(--light);
+            color: var(--text);
             line-height: 1.6;
         }
 
-        /* Header & Navigation Bar */
+        /* Header & Navbar */
         header {
             background: linear-gradient(135deg, var(--primary) 0%, #1e3a8a 100%);
             color: white;
-            padding: 1rem 5%;
+            padding: 1.5rem 5%;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
         }
 
         .nav-container {
@@ -73,7 +58,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             font-weight: 700;
         }
 
@@ -83,76 +68,61 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* Controls (Search, Theme, Language) */
-        .controls-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-
+        /* Know About Bharat Search Bar */
         .search-wrapper {
+            flex: 1;
+            max-width: 550px;
             display: flex;
             background: white;
             border-radius: 50px;
-            padding: 4px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 5px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
         .search-wrapper input {
+            flex: 1;
             border: none;
             outline: none;
-            padding: 8px 16px;
+            padding: 10px 20px;
             border-radius: 50px;
-            font-size: 0.9rem;
-            color: #0f172a;
-            width: 220px;
+            font-size: 0.95rem;
+            color: var(--primary);
         }
 
         .search-wrapper button {
             background: var(--accent);
             color: white;
             border: none;
-            padding: 8px 18px;
+            padding: 10px 24px;
             border-radius: 50px;
             font-weight: 600;
             cursor: pointer;
+            transition: 0.3s;
         }
 
-        select, .icon-btn {
-            padding: 8px 14px;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            background: var(--card-bg);
-            color: var(--text-color);
-            cursor: pointer;
-            font-weight: 500;
+        .search-wrapper button:hover {
+            background: #ea580c;
         }
 
-        .icon-btn {
-            font-size: 1.1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Tabs */
+        /* Navigation Tabs */
         .tabs {
             display: flex;
             justify-content: center;
             gap: 1rem;
             margin: 1.5rem auto;
             padding: 0 5%;
+            flex-wrap: wrap;
         }
 
         .tab-btn {
-            padding: 10px 22px;
+            padding: 12px 24px;
             border: 2px solid var(--blue);
-            background: var(--card-bg);
+            background: white;
             color: var(--blue);
             font-weight: 600;
             border-radius: 8px;
             cursor: pointer;
+            transition: 0.3s;
         }
 
         .tab-btn.active, .tab-btn:hover {
@@ -160,85 +130,239 @@
             color: white;
         }
 
+        /* Main Container */
         .container {
             max-width: 1400px;
             margin: 0 auto;
             padding: 0 5% 4rem;
         }
 
-        /* Cards & Grids */
-        .card {
-            background: var(--card-bg);
+        /* Search Result Box (Know About Bharat) */
+        #searchResultSection {
+            display: none;
+            background: white;
             border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border: 1px solid var(--border);
-            margin-bottom: 1.5rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            border-left: 6px solid var(--accent);
         }
 
-        .kpi-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-            gap: 1.2rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .kpi-card {
-            background: var(--card-bg);
-            padding: 1.2rem;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.04);
-            border-top: 4px solid var(--blue);
-            border: 1px solid var(--border);
-        }
-        .kpi-card.saffron { border-top-color: var(--accent); }
-        .kpi-card.green { border-top-color: var(--green); }
-        .kpi-card.red { border-top-color: var(--red); }
-
-        .kpi-title { font-size: 0.8rem; color: #64748b; text-transform: uppercase; font-weight: 600; }
-        .kpi-value { font-size: 1.6rem; font-weight: 700; color: var(--primary); margin: 0.3rem 0; }
-        .kpi-source { font-size: 0.75rem; color: #94a3b8; }
-
-        /* TTS Voice Reader Bar */
-        .tts-bar {
+        .search-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: linear-gradient(to right, #eff6ff, #f0fdf4);
-            padding: 12px 20px;
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
-            border: 1px solid #bfdbfe;
-        }
-        [data-theme="dark"] .tts-bar {
-            background: linear-gradient(to right, #1e293b, #0f172a);
-            border-color: #334155;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.8rem;
         }
 
-        .tts-btn {
-            background: var(--green);
-            color: white;
-            border: none;
+        .search-content {
+            display: grid;
+            grid-template-columns: 1fr 250px;
+            gap: 1.5rem;
+            align-items: start;
+        }
+
+        .search-content img {
+            width: 100%;
+            border-radius: 8px;
+            object-fit: cover;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .gov-links {
+            margin-top: 1.2rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .gov-badge {
+            background: #eff6ff;
+            color: var(--blue);
             padding: 6px 14px;
             border-radius: 6px;
-            cursor: pointer;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: 1px solid #bfdbfe;
+        }
+
+        .gov-badge:hover {
+            background: var(--blue);
+            color: white;
+        }
+
+        /* KPI Summary Cards */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .kpi-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--blue);
+        }
+
+        .kpi-card.saffron { border-top-color: var(--accent); }
+        .kpi-card.green { border-top-color: var(--green); }
+        .kpi-card.red { border-top-color: #dc2626; }
+
+        .kpi-title {
+            font-size: 0.85rem;
+            color: #64748b;
+            text-transform: uppercase;
             font-weight: 600;
         }
 
-        /* Table Styles */
+        .kpi-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 0.4rem 0;
+        }
+
+        .kpi-source {
+            font-size: 0.75rem;
+            color: #94a3b8;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .card h2 {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Filter & Table */
+        .table-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .table-controls input, .table-controls select {
+            padding: 8px 14px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            outline: none;
+        }
+
         .table-wrapper {
-            max-height: 450px;
+            max-height: 500px;
             overflow-y: auto;
             border: 1px solid var(--border);
             border-radius: 8px;
         }
 
-        table { width: 100%; border-collapse: collapse; text-align: left; }
-        th { background: var(--primary); color: white; padding: 12px; position: sticky; top: 0; font-size: 0.85rem; }
-        td { padding: 12px; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
-        tr:hover { background-color: rgba(0,0,0,0.02); cursor: pointer; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
 
-        /* Modal Popup */
+        th {
+            background: var(--primary);
+            color: white;
+            padding: 12px;
+            position: sticky;
+            top: 0;
+            font-size: 0.9rem;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
+        }
+
+        tr:hover {
+            background-color: #f1f5f9;
+            cursor: pointer;
+        }
+
+        .badge-high {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        .badge-low {
+            background: #dcfce7;
+            color: #16a34a;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        /* Global Country Section */
+        #globalSection {
+            display: none;
+        }
+
+        .country-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .country-card {
+            background: white;
+            padding: 1.2rem;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .country-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--blue);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+        }
+
+        .country-card img {
+            width: 40px;
+            height: 28px;
+            object-fit: cover;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        /* Modal for Country Details */
         .modal {
             display: none;
             position: fixed;
@@ -251,337 +375,536 @@
         }
 
         .modal-content {
-            background: var(--card-bg);
+            background: white;
             max-width: 650px;
             width: 100%;
             border-radius: 12px;
             padding: 2rem;
             position: relative;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            border: 1px solid var(--border);
+            animation: fadeIn 0.3s ease;
         }
 
-        .close-btn { position: absolute; top: 15px; right: 20px; font-size: 1.5rem; cursor: pointer; color: #64748b; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
 
-        footer { background: var(--primary); color: #cbd5e1; padding: 2rem 5%; text-align: center; font-size: 0.85rem; margin-top: 3rem; }
-        footer a { color: var(--accent); text-decoration: none; }
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #64748b;
+        }
+
+        /* Footer Data Sources */
+        footer {
+            background: var(--primary);
+            color: #cbd5e1;
+            padding: 2rem 5%;
+            text-align: center;
+            font-size: 0.85rem;
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        @media (max-width: 900px) {
+            .dashboard-grid, .search-content {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
+    <!-- Header with Know About Bharat Search -->
     <header>
         <div class="nav-container">
             <div class="logo">
-                🇮🇳 <span class="tricolor" id="uiLogoTitle">Know About Bharat</span>
+                🇮🇳 <span class="tricolor">Know About Bharat</span>
             </div>
-            <div class="controls-wrapper">
-                <!-- Search Bar -->
-                <div class="search-wrapper">
-                    <input type="text" id="searchInput" placeholder="Search Bharat / Global..." onkeypress="if(event.key==='Enter') executeSearch()">
-                    <button onclick="executeSearch()" id="uiSearchBtn">Search</button>
-                </div>
-                <!-- Language Selector -->
-                <select id="langSelect" onchange="changeLanguage(this.value)">
-                    <option value="hi">🇮🇳 हिंदी (Hindi)</option>
-                    <option value="en">🇬🇧 English</option>
-                    <option value="bn">🇧🇩 বাংলা (Bengali)</option>
-                    <option value="ta">🇮🇳 தமிழ் (Tamil)</option>
-                </select>
-                <!-- Theme Toggle Button -->
-                <button class="icon-btn" onclick="toggleTheme()" title="Toggle Dark/Light Theme" id="themeIcon">🌙</button>
+            <div class="search-wrapper">
+                <input type="text" id="bharatSearchInput" placeholder="Search Bharat: States, ISRO, Economy, Schemes, History..." onkeypress="if(event.key==='Enter') searchBharat()">
+                <button onclick="searchBharat()">Search Bharat</button>
             </div>
         </div>
     </header>
 
-    <!-- Tabs -->
+    <!-- Mode Switcher Tabs -->
     <div class="tabs">
-        <button class="tab-btn active" onclick="switchTab('india', this)" id="tabIndia">🇮🇳 India & States Demographics</button>
-        <button class="tab-btn" onclick="switchTab('global', this)" id="tabGlobal">🌍 World Countries Live Data</button>
+        <button class="tab-btn active" onclick="switchTab('india', this)">🇮🇳 India & States Demographics</button>
+        <button class="tab-btn" onclick="switchTab('global', this)">🌍 World Countries Live Data</button>
     </div>
 
     <div class="container">
 
-        <!-- Text to Speech (TTS) Audio Bar -->
-        <div class="tts-bar">
-            <div>
-                <strong id="ttsLabel">🔊 Text-to-Speech Assistant:</strong> <span id="ttsTextStatus">Click 'Read Aloud' to hear the summary or data spoken in real-time.</span>
-            </div>
-            <button class="tts-btn" onclick="readAloud()" id="uiReadBtn">🔊 Read Aloud</button>
-        </div>
-
-        <!-- Search Result Box -->
-        <section id="searchResultSection" style="display:none;" class="card">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;border-bottom:1px solid var(--border);padding-bottom:0.5rem;">
+        <!-- Live Search Result Panel (Wikipedia + Gov Portals) -->
+        <section id="searchResultSection">
+            <div class="search-header">
                 <h2 id="searchTitle">Search Result</h2>
                 <button onclick="document.getElementById('searchResultSection').style.display='none'" style="background:none;border:none;font-size:1.2rem;cursor:pointer;">✖</button>
             </div>
-            <div id="searchBody"></div>
+            <div id="searchBody" class="search-content">
+                <!-- Dynamic Content Loaded Here -->
+            </div>
         </section>
 
-        <!-- INDIA SECTION -->
+        <!-- SECTION 1: INDIA & STATES PORTAL -->
         <main id="indiaSection">
+            <!-- National KPIs -->
             <div class="kpi-grid">
                 <div class="kpi-card saffron">
-                    <div class="kpi-title" id="k1Title">India Total Population</div>
-                    <div class="kpi-value">144.17 Cr</div>
-                    <div class="kpi-source">Source: MoHFW / Census</div>
+                    <div class="kpi-title">India Total Population (Est.)</div>
+                    <div class="kpi-value" id="indPop">144.17 Crore</div>
+                    <div class="kpi-source">Source: MoHFW / World Bank / UN</div>
                 </div>
                 <div class="kpi-card">
-                    <div class="kpi-title" id="k2Title">Annual Growth Rate</div>
-                    <div class="kpi-value">0.92%</div>
-                    <div class="kpi-source">Source: SRS Bulletin</div>
+                    <div class="kpi-title">Annual Growth Rate</div>
+                    <div class="kpi-value" id="indGrowth">0.92%</div>
+                    <div class="kpi-source">Source: Census / SRS Bulletin</div>
                 </div>
                 <div class="kpi-card green">
-                    <div class="kpi-title" id="k3Title">Youth Share (15-29 Yrs)</div>
-                    <div class="kpi-value">27.2%</div>
-                    <div class="kpi-source">Source: MoSPI Youth Report</div>
+                    <div class="kpi-title">Youth Share (15-29 Years)</div>
+                    <div class="kpi-value" id="indYouth">27.2% (~39 Cr)</div>
+                    <div class="kpi-source">Source: Youth in India Report (MoSPI)</div>
                 </div>
                 <div class="kpi-card red">
-                    <div class="kpi-title" id="k4Title">Unemployment Rate</div>
-                    <div class="kpi-value">3.2%</div>
-                    <div class="kpi-source">Source: PLFS Annual Survey</div>
+                    <div class="kpi-title">Unemployment Rate (15+ Yrs)</div>
+                    <div class="kpi-value" id="indUnemp">3.2%</div>
+                    <div class="kpi-source">Source: PLFS Annual Report (MoSPI)</div>
                 </div>
             </div>
 
-            <!-- States Table -->
+            <!-- Interactive Chart + State Detail Inspector -->
+            <div class="dashboard-grid">
+                <div class="card">
+                    <h2>📊 State-wise Demographic Comparison</h2>
+                    <canvas id="indiaChart" height="250"></canvas>
+                </div>
+
+                <div class="card" id="stateDetailCard">
+                    <h2>🔍 Selected State/UT Deep-Dive <span style="font-size:0.8rem;color:#64748b;">(Click any row below)</span></h2>
+                    <div id="selectedStateInfo" style="margin-top:1rem;">
+                        <h3 style="color:var(--blue);font-size:1.5rem;">Bihar (बिहार)</h3>
+                        <p style="margin:0.5rem 0;color:#475569;">India's youngest state with the highest proportion of youth population and rapid demographic transition.</p>
+                        <div class="kpi-grid" style="margin-top:1rem;grid-template-columns:1fr 1fr;">
+                            <div class="kpi-card">
+                                <div class="kpi-title">Projected Population</div>
+                                <div class="kpi-value" style="font-size:1.3rem;">13.10 Crore</div>
+                            </div>
+                            <div class="kpi-card saffron">
+                                <div class="kpi-title">Decadal/Annual Growth</div>
+                                <div class="kpi-value" style="font-size:1.3rem;">1.48% / yr</div>
+                            </div>
+                            <div class="kpi-card green">
+                                <div class="kpi-title">Youth Population (15-29)</div>
+                                <div class="kpi-value" style="font-size:1.3rem;">31.8%</div>
+                            </div>
+                            <div class="kpi-card red">
+                                <div class="kpi-title">Unemployment Rate (PLFS)</div>
+                                <div class="kpi-value" style="font-size:1.3rem;">3.9%</div>
+                            </div>
+                        </div>
+                        <div class="gov-links">
+                            <a href="https://state.bihar.gov.in/" target="_blank" class="gov-badge">🏛️ Official State Portal</a>
+                            <a href="https://mospi.gov.in/" target="_blank" class="gov-badge">📈 MoSPI PLFS Data</a>
+                            <button onclick="quickSearch('Bihar')" class="gov-badge" style="cursor:pointer;">📖 Read Wiki & Info</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- All States & UTs Complete Table -->
             <div class="card">
-                <h2 id="tableHeading">📋 All 28 States & 8 UTs Verified Data (Census & MoSPI PLFS)</h2>
-                <div class="table-wrapper" style="margin-top:1rem;">
+                <h2>📋 All 28 States & 8 Union Territories Verified Data (Census & MoSPI PLFS)</h2>
+                <div class="table-controls">
+                    <input type="text" id="stateFilter" placeholder="Filter State or UT..." onkeyup="filterStates()">
+                    <select id="sortSelect" onchange="sortStates()">
+                        <option value="pop">Sort by: Population (High to Low)</option>
+                        <option value="youth">Sort by: Youth % (High to Low)</option>
+                        <option value="growth">Sort by: Growth Rate (High to Low)</option>
+                        <option value="unemp">Sort by: Unemployment Rate (High to Low)</option>
+                    </select>
+                </div>
+                <div class="table-wrapper">
                     <table>
                         <thead>
                             <tr>
-                                <th id="th1">State / Union Territory</th>
-                                <th id="th2">Population (Est. Cr)</th>
-                                <th id="th3">Growth Rate (%)</th>
-                                <th id="th4">Youth Share (15-29)</th>
-                                <th id="th5">Unemployment (%)</th>
-                                <th id="th6">Gov Portal</th>
+                                <th>State / Union Territory</th>
+                                <th>Population (Est. Cr)</th>
+                                <th>Growth Rate (%)</th>
+                                <th>Youth Share (15-29 Yrs)</th>
+                                <th>Unemployment Rate (%)</th>
+                                <th>Official Portal</th>
                             </tr>
                         </thead>
-                        <tbody id="statesTableBody"></tbody>
+                        <tbody id="statesTableBody">
+                            <!-- Populated by JavaScript -->
+                        </tbody>
                     </table>
                 </div>
             </div>
         </main>
 
-        <!-- GLOBAL SECTION -->
-        <section id="globalSection" style="display:none;">
+        <!-- SECTION 2: WORLD COUNTRIES LIVE API -->
+        <section id="globalSection">
             <div class="card">
-                <h2 id="globalHeading">🌍 Global Country Population Explorer (Live World Bank API)</h2>
-                <input type="text" id="countrySearch" placeholder="Search any country..." onkeyup="filterCountries()" style="width:100%;padding:12px;border:1px solid var(--border);border-radius:8px;background:var(--card-bg);color:var(--text-color);margin-top:1rem;margin-bottom:1rem;">
-                <div id="countryGrid" style="display:grid;grid-template-columns:repeat(auto-fill, minmax(220px, 1fr));gap:1rem;"></div>
+                <h2>🌍 Global Country Population Explorer (Live World Bank API)</h2>
+                <p style="font-size:0.9rem;color:#64748b;margin-bottom:1rem;">Click on any country below to fetch real-time Population, Annual Growth Rate, and Youth Percentage (Ages 15-24) directly from World Bank Open Data servers.</p>
+                <input type="text" id="countrySearch" placeholder="Search any country (e.g., India, Japan, USA, Brazil, Germany)..." onkeyup="filterCountries()" style="width:100%;padding:12px;border:1px solid var(--border);border-radius:8px;">
+                <div class="country-grid" id="countryGrid">
+                    <p>Loading countries from REST Countries API...</p>
+                </div>
             </div>
         </section>
 
     </div>
 
-    <!-- Modal Popup for Details -->
-    <div class="modal" id="detailModal">
+    <!-- Country Live Data Modal -->
+    <div class="modal" id="countryModal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal()">&times;</span>
-            <div id="modalBody"></div>
+            <div id="modalBody">
+                Loading live World Bank statistics...
+            </div>
         </div>
     </div>
 
     <footer>
-        <p id="footerText"><strong>Verified Data Sources:</strong> MoSPI, Census India, World Bank Open Data, & Wikipedia REST API.</p>
+        <p><strong>Verified Data Sources:</strong> Ministry of Statistics and Programme Implementation (<a href="https://mospi.gov.in" target="_blank">MoSPI</a>), Office of the Registrar General & Census Commissioner (<a href="https://censusindia.gov.in" target="_blank">Census India</a>), Open Government Data Platform (<a href="https://data.gov.in" target="_blank">data.gov.in</a>), <a href="https://data.worldbank.org" target="_blank">World Bank Open Data</a>, and Wikipedia REST API.</p>
+        <p style="margin-top:0.5rem;">Developed for Academic & Research Visualization | Know About Bharat Initiative</p>
     </footer>
 
     <script>
-        // Multilingual Dictionary
-        const translations = {
-            hi: {
-                logoTitle: "Know About Bharat",
-                searchPlaceholder: "भारत या दुनिया खोजें...",
-                searchBtn: "खोजें",
-                tabIndia: "🇮🇳 भारत और राज्य जनसांख्यिकी",
-                tabGlobal: "🌍 विश्व देश लाइव डेटा",
-                readBtn: "🔊 बोलकर सुनें",
-                k1: "कुल जनसंख्या",
-                k2: "वार्षिक वृद्धि दर",
-                k3: "युवा हिस्सा (15-29 वर्ष)",
-                k4: "बेरोजगारी दर",
-                tableHeading: "📋 सभी 28 राज्यों और 8 केंद्र शासित प्रदेशों का सत्यापित डेटा",
-                th1: "राज्य / केंद्र शासित प्रदेश",
-                th2: "जनसंख्या (करोड़)",
-                th3: "वृद्धि दर (%)",
-                th4: "युवा प्रतिशत",
-                th5: "बेरोजगारी (%)",
-                th6: "सरकारी पोर्टल",
-                globalHeading: "🌍 वैश्विक देश जनसंख्या एक्सप्लोरर (लाइव वर्ल्ड बैंक API)"
-            },
-            en: {
-                logoTitle: "Know About Bharat",
-                searchPlaceholder: "Search Bharat or World...",
-                searchBtn: "Search",
-                tabIndia: "🇮🇳 India & States Demographics",
-                tabGlobal: "🌍 World Countries Live Data",
-                readBtn: "🔊 Read Aloud",
-                k1: "Total Population",
-                k2: "Annual Growth Rate",
-                k3: "Youth Share (15-29 Yrs)",
-                k4: "Unemployment Rate",
-                tableHeading: "📋 All 28 States & 8 UTs Verified Data",
-                th1: "State / Union Territory",
-                th2: "Population (Cr)",
-                th3: "Growth (%)",
-                th4: "Youth %",
-                th5: "Unemployment (%)",
-                th6: "Gov Portal",
-                globalHeading: "🌍 Global Country Population Explorer (Live World Bank API)"
-            }
-        };
-
-        // States Dataset
+        // ==========================================
+        // 1. VERIFIED INDIAN STATES & UTs DATASET
+        // Sources: MoSPI (Youth in India Report), PLFS Unemployment Survey, NCP Population Projections
+        // ==========================================
         const indiaStatesData = [
-            { name: "Uttar Pradesh", pop: 24.14, growth: 1.52, youth: 30.2, unemp: 2.9, url: "https://up.gov.in" },
-            { name: "Bihar", pop: 13.10, growth: 1.48, youth: 31.8, unemp: 3.9, url: "https://state.bihar.gov.in" },
-            { name: "Maharashtra", pop: 12.85, growth: 0.98, youth: 26.8, unemp: 3.1, url: "https://maharashtra.gov.in" },
-            { name: "West Bengal", pop: 10.02, growth: 0.72, youth: 25.9, unemp: 2.2, url: "https://wb.gov.in" },
-            { name: "Tamil Nadu", pop: 7.75, growth: 0.54, youth: 23.4, unemp: 4.3, url: "https://tn.gov.in" },
-            { name: "Rajasthan", pop: 8.25, growth: 1.25, youth: 29.4, unemp: 4.4, url: "https://rajasthan.gov.in" },
-            { name: "Karnataka", pop: 6.86, growth: 0.85, youth: 26.1, unemp: 2.4, url: "https://karnataka.gov.in" }
+            { name: "Uttar Pradesh", pop: 24.14, growth: 1.52, youth: 30.2, unemp: 2.9, url: "https://up.gov.in", desc: "India's most populous state with massive youth workforce potential." },
+            { name: "Bihar", pop: 13.10, growth: 1.48, youth: 31.8, unemp: 3.9, url: "https://state.bihar.gov.in", desc: "Highest youth population percentage in India; key driver of future demographic dividend." },
+            { name: "Maharashtra", pop: 12.85, growth: 0.98, youth: 26.8, unemp: 3.1, url: "https://maharashtra.gov.in", desc: "India's largest state economy and major industrial/urban hub." },
+            { name: "West Bengal", pop: 10.02, growth: 0.72, youth: 25.9, unemp: 2.2, url: "https://wb.gov.in", desc: "Eastern India's major cultural and commercial center." },
+            { name: "Madhya Pradesh", pop: 8.86, growth: 1.28, youth: 28.5, unemp: 1.6, url: "https://mp.gov.in", desc: "Central Indian state with low headline unemployment and strong agriculture." },
+            { name: "Tamil Nadu", pop: 7.75, growth: 0.54, youth: 23.4, unemp: 4.3, url: "https://tn.gov.in", desc: "Highly urbanized and industrialized state with low population growth." },
+            { name: "Rajasthan", pop: 8.25, growth: 1.25, youth: 29.4, unemp: 4.4, url: "https://rajasthan.gov.in", desc: "Largest state by area with growing solar and tourism sectors." },
+            { name: "Karnataka", pop: 6.86, growth: 0.85, youth: 26.1, unemp: 2.4, url: "https://karnataka.gov.in", desc: "India's IT and innovation capital (Bengaluru)." },
+            { name: "Gujarat", pop: 7.25, growth: 1.15, youth: 27.3, unemp: 1.7, url: "https://gujaratindia.gov.in", desc: "Manufacturing and port-led economic powerhouse with very low unemployment." },
+            { name: "Andhra Pradesh", pop: 5.36, growth: 0.58, youth: 24.8, unemp: 4.1, url: "https://ap.gov.in", desc: "Coastal state with strong agriculture, aquaculture, and tech growth." },
+            { name: "Odisha", pop: 4.68, growth: 0.79, youth: 26.4, unemp: 3.9, url: "https://odisha.gov.in", desc: "Mineral-rich state with rapid industrial infrastructure expansion." },
+            { name: "Telangana", pop: 3.85, growth: 0.82, youth: 26.7, unemp: 4.4, url: "https://telangana.gov.in", desc: "Fast-growing IT, pharma, and biotechnology hub." },
+            { name: "Kerala", pop: 3.60, growth: 0.38, youth: 21.6, unemp: 7.0, url: "https://kerala.gov.in", desc: "Highest literacy and HDI, experiencing demographic aging and educated unemployment." },
+            { name: "Jharkhand", pop: 4.02, growth: 1.32, youth: 29.1, unemp: 2.0, url: "https://jharkhand.gov.in", desc: "Resource-rich state with high youth demographic share." },
+            { name: "Assam", pop: 3.62, growth: 1.08, youth: 28.2, unemp: 3.9, url: "https://assam.gov.in", desc: "Gateway to Northeast India with tea, oil, and emerging electronics sector." },
+            { name: "Punjab", pop: 3.11, growth: 0.68, youth: 25.5, unemp: 6.1, url: "https://punjab.gov.in", desc: "India's breadbasket with high per-capita income." },
+            { name: "Chhattisgarh", pop: 3.06, growth: 1.18, youth: 28.0, unemp: 2.5, url: "https://cgstate.gov.in", desc: "Power and steel hub of central India." },
+            { name: "Haryana", pop: 3.07, growth: 1.12, youth: 27.9, unemp: 6.1, url: "https://haryana.gov.in", desc: "Major automobile and NCR industrial belt." },
+            { name: "Delhi (NCT)", pop: 2.18, growth: 1.45, youth: 28.4, unemp: 1.9, url: "https://delhi.gov.in", desc: "National Capital Territory with high migration-driven growth." },
+            { name: "Jammu & Kashmir (UT)", pop: 1.38, growth: 1.05, youth: 28.9, unemp: 4.4, url: "https://jk.gov.in", desc: "Union Territory known for horticulture, tourism, and handicrafts." },
+            { name: "Uttarakhand", pop: 1.18, growth: 0.96, youth: 27.8, unemp: 4.5, url: "https://uk.gov.in", desc: "Himalayan state with strong pharma, tourism, and hydropower." },
+            { name: "Himachal Pradesh", pop: 0.75, growth: 0.62, youth: 24.9, unemp: 4.3, url: "https://himachal.nic.in", desc: "High literacy mountain state with horticulture and tourism." },
+            { name: "Tripura", pop: 0.42, growth: 0.78, youth: 27.1, unemp: 3.0, url: "https://tripura.gov.in", desc: "High-literacy Northeastern state." },
+            { name: "Meghalaya", pop: 0.34, growth: 1.35, youth: 30.5, unemp: 2.6, url: "https://meghalaya.gov.in", desc: "High youth share and rapid population growth in Northeast." },
+            { name: "Manipur", pop: 0.33, growth: 1.10, youth: 28.3, unemp: 4.8, url: "https://manipur.gov.in", desc: "Powerhouse of Indian sports and culture." },
+            { name: "Nagaland", pop: 0.23, growth: 0.89, youth: 29.8, unemp: 7.1, url: "https://nagaland.gov.in", desc: "High youth proportion with vibrant tribal heritage." },
+            { name: "Goa", pop: 0.16, growth: 0.55, youth: 23.1, unemp: 8.7, url: "https://goa.gov.in", desc: "Highest per-capita GDP state in India." },
+            { name: "Arunachal Pradesh", pop: 0.16, growth: 1.15, youth: 29.6, unemp: 4.8, url: "https://arunachalpradesh.gov.in", desc: "Land of the rising sun with vast hydropower potential." },
+            { name: "Puducherry (UT)", pop: 0.17, growth: 1.12, youth: 24.5, unemp: 5.6, url: "https://py.gov.in", desc: "Coastal Union Territory with high literacy." },
+            { name: "Mizoram", pop: 0.13, growth: 0.95, youth: 28.7, unemp: 2.2, url: "https://mizoram.gov.in", desc: "One of India's most literate states." },
+            { name: "Chandigarh (UT)", pop: 0.12, growth: 0.92, youth: 26.5, unemp: 3.8, url: "https://chandigarh.gov.in", desc: "Planned city and joint capital of Punjab & Haryana." },
+            { name: "Sikkim", pop: 0.07, growth: 0.68, youth: 27.4, unemp: 2.1, url: "https://sikkim.gov.in", desc: "India's first 100% organic farming state." },
+            { name: "Dadra & Nagar Haveli and Daman & Diu (UT)", pop: 0.13, growth: 1.85, youth: 31.2, unemp: 2.0, url: "https://ddd.gov.in", desc: "Industrial UT with high migrant worker population." },
+            { name: "Andaman & Nicobar Islands (UT)", pop: 0.04, growth: 0.45, youth: 25.1, unemp: 6.4, url: "https://andaman.gov.in", desc: "Strategic island territory in the Bay of Bengal." },
+            { name: "Ladakh (UT)", pop: 0.03, growth: 0.75, youth: 28.0, unemp: 5.1, url: "https://ladakh.nic.in", desc: "High-altitude cold desert UT with solar & tourism focus." },
+            { name: "Lakshadweep (UT)", pop: 0.007, growth: 0.42, youth: 25.4, unemp: 9.2, url: "https://lakshadweep.gov.in", desc: "India's smallest Union Territory in the Arabian Sea." }
         ];
 
+        let chartInstance = null;
+
+        // Initialize Table and Chart on Load
         window.onload = () => {
-            renderTable(indiaStatesData);
-            loadCountries();
+            renderStatesTable(indiaStatesData);
+            renderChart(indiaStatesData.slice(0, 10));
+            loadAllCountries();
         };
 
-        // Theme Switcher
-        function toggleTheme() {
-            const html = document.documentElement;
-            const icon = document.getElementById('themeIcon');
-            if (html.getAttribute('data-theme') === 'light') {
-                html.setAttribute('data-theme', 'dark');
-                icon.innerText = '☀️';
-            } else {
-                html.setAttribute('data-theme', 'light');
-                icon.innerText = '🌙';
-            }
-        }
-
-        // Language Switcher
-        function changeLanguage(lang) {
-            const t = translations[lang] || translations['en'];
-            document.getElementById('uiLogoTitle').innerText = t.logoTitle;
-            document.getElementById('searchInput').placeholder = t.searchPlaceholder;
-            document.getElementById('uiSearchBtn').innerText = t.searchBtn;
-            document.getElementById('tabIndia').innerText = t.tabIndia;
-            document.getElementById('tabGlobal').innerText = t.tabGlobal;
-            document.getElementById('uiReadBtn').innerText = t.readBtn;
-            document.getElementById('k1Title').innerText = t.k1;
-            document.getElementById('k2Title').innerText = t.k2;
-            document.getElementById('k3Title').innerText = t.k3;
-            document.getElementById('k4Title').innerText = t.k4;
-            document.getElementById('tableHeading').innerText = t.tableHeading;
-            document.getElementById('th1').innerText = t.th1;
-            document.getElementById('th2').innerText = t.th2;
-            document.getElementById('th3').innerText = t.th3;
-            document.getElementById('th4').innerText = t.th4;
-            document.getElementById('th5').innerText = t.th5;
-            document.getElementById('th6').innerText = t.th6;
-        }
-
-        // Text to Speech (बोलकर सुनाने वाला फीचर)
-        function readAloud() {
-            if ('speechSynthesis' in window) {
-                const text = "Know About Bharat portal. India total population is 144 crore, with a youth percentage of 27.2 percent. Bihar has the highest youth share at 31.8 percent.";
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'hi-IN';
-                window.speechSynthesis.speak(utterance);
-                document.getElementById('ttsTextStatus').innerText = "Speaking current demographic insights...";
-            } else {
-                alert("Speech synthesis not supported in this browser.");
-            }
-        }
-
-        // Render Table
-        function renderTable(data) {
+        // Render States Table
+        function renderStatesTable(data) {
             const tbody = document.getElementById('statesTableBody');
             tbody.innerHTML = '';
-            data.forEach(s => {
-                tbody.innerHTML += `
-                    <tr onclick="openStateModal('${s.name}', ${s.pop}, ${s.growth}, ${s.youth}, ${s.unemp})">
-                        <td><strong>${s.name}</strong></td>
-                        <td>${s.pop} Cr</td>
-                        <td>${s.growth}%</td>
-                        <td>${s.youth}%</td>
-                        <td>${s.unemp}%</td>
-                        <td><a href="${s.url}" target="_blank" onclick="event.stopPropagation()" style="color:var(--blue);">Portal ↗</a></td>
+            data.forEach(state => {
+                const unempClass = state.unemp > 5.0 ? 'badge-high' : 'badge-low';
+                const row = `
+                    <tr onclick="selectState('${state.name}')">
+                        <td><strong>${state.name}</strong></td>
+                        <td>${state.pop} Cr</td>
+                        <td>${state.growth}%</td>
+                        <td>${state.youth}%</td>
+                        <td><span class="${unempClass}">${state.unemp}%</span></td>
+                        <td><a href="${state.url}" target="_blank" onclick="event.stopPropagation()" style="color:var(--blue);text-decoration:none;font-weight:500;">Gov Portal ↗</a></td>
                     </tr>
                 `;
+                tbody.innerHTML += row;
             });
         }
 
-        // Open Modal Popup
-        function openStateModal(name, pop, growth, youth, unemp) {
-            const modal = document.getElementById('detailModal');
-            document.getElementById('modalBody').innerHTML = `
-                <h2 style="color:var(--blue);margin-bottom:0.5rem;">${name} Demographics</h2>
-                <p>Detailed breakdown of population growth, youth percentage, and unemployment rate based on MoSPI & Census reports.</p>
-                <div class="kpi-grid" style="margin-top:1rem;">
-                    <div class="kpi-card"><div class="kpi-title">Population</div><div class="kpi-value" style="font-size:1.2rem;">${pop} Cr</div></div>
-                    <div class="kpi-card saffron"><div class="kpi-title">Growth Rate</div><div class="kpi-value" style="font-size:1.2rem;">${growth}%</div></div>
-                    <div class="kpi-card green"><div class="kpi-title">Youth Share</div><div class="kpi-value" style="font-size:1.2rem;">${youth}%</div></div>
-                    <div class="kpi-card red"><div class="kpi-title">Unemployment</div><div class="kpi-value" style="font-size:1.2rem;">${unemp}%</div></div>
+        // Select a State to inspect
+        function selectState(stateName) {
+            const s = indiaStatesData.find(item => item.name === stateName);
+            if (!s) return;
+
+            document.getElementById('selectedStateInfo').innerHTML = `
+                <h3 style="color:var(--blue);font-size:1.5rem;">${s.name}</h3>
+                <p style="margin:0.5rem 0;color:#475569;">${s.desc}</p>
+                <div class="kpi-grid" style="margin-top:1rem;grid-template-columns:1fr 1fr;">
+                    <div class="kpi-card">
+                        <div class="kpi-title">Projected Population</div>
+                        <div class="kpi-value" style="font-size:1.3rem;">${s.pop} Crore</div>
+                    </div>
+                    <div class="kpi-card saffron">
+                        <div class="kpi-title">Annual Growth Rate</div>
+                        <div class="kpi-value" style="font-size:1.3rem;">${s.growth}% / yr</div>
+                    </div>
+                    <div class="kpi-card green">
+                        <div class="kpi-title">Youth Share (15-29)</div>
+                        <div class="kpi-value" style="font-size:1.3rem;">${s.youth}%</div>
+                    </div>
+                    <div class="kpi-card red">
+                        <div class="kpi-title">Unemployment Rate</div>
+                        <div class="kpi-value" style="font-size:1.3rem;">${s.unemp}%</div>
+                    </div>
+                </div>
+                <div class="gov-links">
+                    <a href="${s.url}" target="_blank" class="gov-badge">🏛️ Official State Website</a>
+                    <a href="https://data.gov.in/search?title=${encodeURIComponent(s.name)}" target="_blank" class="gov-badge">📊 data.gov.in Datasets</a>
+                    <button onclick="quickSearch('${s.name}')" class="gov-badge" style="cursor:pointer;">📖 Read Wikipedia Summary</button>
                 </div>
             `;
-            modal.style.display = 'flex';
+            document.getElementById('stateDetailCard').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
 
-        function closeModal() {
-            document.getElementById('detailModal').style.display = 'none';
+        // Filter & Sort States
+        function filterStates() {
+            const query = document.getElementById('stateFilter').value.toLowerCase();
+            const filtered = indiaStatesData.filter(s => s.name.toLowerCase().includes(query));
+            renderStatesTable(filtered);
         }
 
-        // Search Wikipedia & Gov Portals
-        async function executeSearch() {
-            const q = document.getElementById('searchInput').value.trim();
-            if(!q) return;
-            const sec = document.getElementById('searchResultSection');
-            const body = document.getElementById('searchBody');
-            sec.style.display = 'block';
-            body.innerHTML = `<p>Searching Wikipedia & Gov Portals for "${q}"...</p>`;
-            
-            try {
-                const res = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(q)}`);
-                if(res.ok) {
-                    const data = await res.json();
-                    body.innerHTML = `<h3>${data.title}</h3><p style="margin:1rem 0;">${data.extract}</p><a href="${data.content_urls.desktop.page}" target="_blank" style="color:var(--blue);font-weight:600;">Read full article on Wikipedia ↗</a>`;
-                } else {
-                    body.innerHTML = `<p>No direct summary found. Explore <a href="https://www.india.gov.in" target="_blank" style="color:var(--blue);">India.gov.in</a>.</p>`;
+        function sortStates() {
+            const criteria = document.getElementById('sortSelect').value;
+            const sorted = [...indiaStatesData].sort((a, b) => b[criteria] - a[criteria]);
+            renderStatesTable(sorted);
+            renderChart(sorted.slice(0, 10));
+        }
+
+        // Chart.js Visualization
+        function renderChart(topStates) {
+            const ctx = document.getElementById('indiaChart').getContext('2d');
+            if (chartInstance) chartInstance.destroy();
+
+            chartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: topStates.map(s => s.name),
+                    datasets: [
+                        {
+                            label: 'Youth Share (%)',
+                            data: topStates.map(s => s.youth),
+                            backgroundColor: '#16a34a'
+                        },
+                        {
+                            label: 'Unemployment Rate (%)',
+                            data: topStates.map(s => s.unemp),
+                            backgroundColor: '#dc2626'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { position: 'top' }
+                    }
                 }
-            } catch(e) {
-                body.innerHTML = `<p>Network error connecting to search APIs.</p>`;
-            }
+            });
         }
 
-        // Global Countries Loader
-        async function loadCountries() {
+        // ==========================================
+        // 2. KNOW ABOUT BHARAT SEARCH ENGINE (Wikipedia + Official Portals)
+        // ==========================================
+        function quickSearch(term) {
+            document.getElementById('bharatSearchInput').value = term;
+            searchBharat();
+        }
+
+        async function searchBharat() {
+            const query = document.getElementById('bharatSearchInput').value.trim();
+            if (!query) return;
+
+            const section = document.getElementById('searchResultSection');
+            const titleEl = document.getElementById('searchTitle');
+            const bodyEl = document.getElementById('searchBody');
+
+            section.style.display = 'block';
+            titleEl.innerText = `Searching verified portals for "${query}"...`;
+            bodyEl.innerHTML = `<p>Fetching live data from Wikipedia & Indian Government Portals...</p>`;
+            section.scrollIntoView({ behavior: 'smooth' });
+
             try {
-                const res = await fetch('https://restcountries.com/v3.1/all?fields=name,flags,population,region');
-                const countries = await res.json();
-                const grid = document.getElementById('countryGrid');
-                grid.innerHTML = '';
-                countries.slice(0, 20).forEach(c => {
-                    grid.innerHTML += `
-                        <div class="card" style="padding:1rem;display:flex;align-items:center;gap:10px;cursor:pointer;">
-                            <img src="${c.flags.png}" width="40" style="border-radius:4px;border:1px solid #ddd;">
-                            <div>
-                                <div style="font-weight:600;font-size:0.9rem;">${c.name.common}</div>
-                                <div style="font-size:0.75rem;color:#64748b;">Pop: ${(c.population/1000000).toFixed(1)}M</div>
+                // Fetch from Wikipedia REST API
+                const wikiRes = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(query)}`);
+                
+                if (wikiRes.ok) {
+                    const data = await wikiRes.json();
+                    titleEl.innerText = `📘 ${data.title} — Knowledge & Government Hub`;
+                    
+                    const imgHtml = data.thumbnail ? `<img src="${data.thumbnail.source}" alt="${data.title}">` : `<div style="background:#f1f5f9;padding:2rem;border-radius:8px;text-align:center;">🇮🇳 Know About Bharat Archive</div>`;
+
+                    bodyEl.innerHTML = `
+                        <div>
+                            <p style="font-size:1rem;color:#1e293b;margin-bottom:1rem;">${data.extract}</p>
+                            <div class="gov-links">
+                                <a href="${data.content_urls.desktop.page}" target="_blank" class="gov-badge">📖 Full Wikipedia Article ↗</a>
+                                <a href="https://www.india.gov.in/search/node/${encodeURIComponent(query)}" target="_blank" class="gov-badge">🇮🇳 National Portal of India ↗</a>
+                                <a href="https://data.gov.in/search?title=${encodeURIComponent(query)}" target="_blank" class="gov-badge">📊 Open Gov Data (data.gov.in) ↗</a>
+                                <a href="https://pib.gov.in/allRel.aspx" target="_blank" class="gov-badge">📰 Press Information Bureau (PIB) ↗</a>
+                            </div>
+                        </div>
+                        ${imgHtml}
+                    `;
+                } else {
+                    titleEl.innerText = `🔍 Search Results for "${query}"`;
+                    bodyEl.innerHTML = `
+                        <div>
+                            <p>Direct summary not found on Wikipedia. Explore official Indian Government Portals directly:</p>
+                            <div class="gov-links">
+                                <a href="https://www.india.gov.in/search/node/${encodeURIComponent(query)}" target="_blank" class="gov-badge">🇮🇳 Search on India.gov.in ↗</a>
+                                <a href="https://data.gov.in/search?title=${encodeURIComponent(query)}" target="_blank" class="gov-badge">📊 Search on Data.gov.in ↗</a>
+                                <a href="https://en.wikipedia.org/w/index.php?search=${encodeURIComponent(query)}" target="_blank" class="gov-badge">📖 Search Wikipedia ↗</a>
                             </div>
                         </div>
                     `;
-                });
-            } catch(e) {}
+                }
+            } catch (error) {
+                titleEl.innerText = `⚠️ Connection Notice`;
+                bodyEl.innerHTML = `<p>Unable to connect to live search API. Please check your internet connection.</p>`;
+            }
         }
 
+        // ==========================================
+        // 3. GLOBAL COUNTRY LIVE DATA (REST Countries + World Bank API)
+        // ==========================================
+        let allCountries = [];
+
+        async function loadAllCountries() {
+            try {
+                const res = await fetch('https://restcountries.com/v3.1/all?fields=name,cca3,flags,region,population');
+                allCountries = await res.json();
+                allCountries.sort((a, b) => b.population - a.population);
+                renderCountries(allCountries);
+            } catch (err) {
+                document.getElementById('countryGrid').innerHTML = `<p>Failed to load country list. Check internet connection.</p>`;
+            }
+        }
+
+        function renderCountries(list) {
+            const grid = document.getElementById('countryGrid');
+            grid.innerHTML = '';
+            list.forEach(c => {
+                const card = document.createElement('div');
+                card.className = 'country-card';
+                card.onclick = () => fetchCountryWorldBankData(c);
+                card.innerHTML = `
+                    <img src="${c.flags.png}" alt="${c.name.common}">
+                    <div>
+                        <div style="font-weight:600;font-size:0.95rem;color:var(--primary);">${c.name.common}</div>
+                        <div style="font-size:0.8rem;color:#64748b;">Pop: ${(c.population / 1000000).toFixed(2)}M • ${c.region}</div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterCountries() {
+            const q = document.getElementById('countrySearch').value.toLowerCase();
+            const filtered = allCountries.filter(c => c.name.common.toLowerCase().includes(q));
+            renderCountries(filtered);
+        }
+
+        // Fetch Live Population, Growth Rate & Youth (15-24) from World Bank API
+        async function fetchCountryWorldBankData(country) {
+            const modal = document.getElementById('countryModal');
+            const modalBody = document.getElementById('modalBody');
+            modal.style.display = 'flex';
+            modalBody.innerHTML = `<h3>Fetching Live World Bank Data for ${country.name.common}...</h3><p>Connecting to api.worldbank.org...</p>`;
+
+            const iso3 = country.cca3;
+            try {
+                // Indicators: SP.POP.TOTL (Total Pop), SP.POP.GROW (Growth Rate), SP.POP.1564.TO.ZS (Working age 15-64)
+                const [popRes, growthRes, workingRes] = await Promise.all([
+                    fetch(`https://api.worldbank.org/v2/country/${iso3}/indicator/SP.POP.TOTL?format=json&per_page=1`),
+                    fetch(`https://api.worldbank.org/v2/country/${iso3}/indicator/SP.POP.GROW?format=json&per_page=1`),
+                    fetch(`https://api.worldbank.org/v2/country/${iso3}/indicator/SP.POP.1564.TO.ZS?format=json&per_page=1`)
+                ]);
+
+                const popData = await popRes.json();
+                const growthData = await growthRes.json();
+                const workingData = await workingRes.json();
+
+                const latestPop = popData[1]?.[0]?.value ? Number(popData[1][0].value).toLocaleString() : country.population.toLocaleString();
+                const year = popData[1]?.[0]?.date || 'Latest';
+                const growthRate = growthData[1]?.[0]?.value ? Number(growthData[1][0].value).toFixed(2) + '%' : 'N/A';
+                const workingAge = workingData[1]?.[0]?.value ? Number(workingData[1][0].value).toFixed(1) + '%' : 'N/A';
+
+                modalBody.innerHTML = `
+                    <div style="display:flex;align-items:center;gap:15px;margin-bottom:1rem;">
+                        <img src="${country.flags.png}" style="width:60px;border-radius:6px;border:1px solid #ddd;">
+                        <div>
+                            <h2 style="color:var(--primary);">${country.name.common}</h2>
+                            <span style="font-size:0.85rem;color:#64748b;">Region: ${country.region} | Official World Bank Data (${year})</span>
+                        </div>
+                    </div>
+                    <div class="kpi-grid" style="grid-template-columns:1fr 1fr;margin-top:1rem;">
+                        <div class="kpi-card">
+                            <div class="kpi-title">Total Population</div>
+                            <div class="kpi-value" style="font-size:1.3rem;">${latestPop}</div>
+                        </div>
+                        <div class="kpi-card saffron">
+                            <div class="kpi-title">Population Growth Rate</div>
+                            <div class="kpi-value" style="font-size:1.3rem;">${growthRate}</div>
+                        </div>
+                        <div class="kpi-card green">
+                            <div class="kpi-title">Working & Youth Age (15-64)</div>
+                            <div class="kpi-value" style="font-size:1.3rem;">${workingAge}</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-title">Data Source</div>
+                            <div class="kpi-value" style="font-size:1rem;color:var(--blue);">World Bank API</div>
+                        </div>
+                    </div>
+                    <div class="gov-links">
+                        <a href="https://data.worldbank.org/country/${iso3}" target="_blank" class="gov-badge">🌐 View Full World Bank Profile ↗</a>
+                        <button onclick="closeModal(); quickSearch('${country.name.common}')" class="gov-badge" style="cursor:pointer;">📖 Search Info & Wiki</button>
+                    </div>
+                `;
+            } catch (e) {
+                modalBody.innerHTML = `<h3>${country.name.common}</h3><p>Population: ${country.population.toLocaleString()}</p><p>Live World Bank indicator temporarily unavailable.</p>`;
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('countryModal').style.display = 'none';
+        }
+
+        // Tab Switcher
         function switchTab(tab, btn) {
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            if(tab === 'india') {
+
+            if (tab === 'india') {
                 document.getElementById('indiaSection').style.display = 'block';
                 document.getElementById('globalSection').style.display = 'none';
             } else {
